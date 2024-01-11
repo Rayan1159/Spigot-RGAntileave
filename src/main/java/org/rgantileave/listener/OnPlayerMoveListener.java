@@ -24,10 +24,10 @@ public class OnPlayerMoveListener implements Listener {
         Map<String, ProtectedRegion> regions = Rgantileave.getAllRegions(getWorldEditWorld(player));
         Location playerLocation = BukkitAdapter.adapt(event.getTo());
 
-        ApplicableRegionSet currentRegions = getApplicableCurrentRegions(playerLocation);
+        ApplicableRegionSet currentRegions = getApplicableRegions(playerLocation);
 
         Location previousLocation = BukkitAdapter.adapt(event.getFrom());
-        ApplicableRegionSet previousRegions = getApplicablePreviousRegions(previousLocation);
+        ApplicableRegionSet previousRegions = getApplicableRegions(previousLocation);
 
         for (ProtectedRegion region : previousRegions) {
             if (regions == null) return;
@@ -54,11 +54,7 @@ public class OnPlayerMoveListener implements Listener {
         return false;
     }
 
-    private ApplicableRegionSet getApplicableCurrentRegions(Location location) {
-        return WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(location);
-    }
-
-    private ApplicableRegionSet getApplicablePreviousRegions(Location location) {
+    private ApplicableRegionSet getApplicableRegions(Location location) {
         return WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(location);
     }
 }
