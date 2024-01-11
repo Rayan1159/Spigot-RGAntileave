@@ -17,7 +17,6 @@ import org.rgantileave.Rgantileave;
 import java.util.Map;
 
 public class OnPlayerMoveListener implements Listener {
-
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -31,7 +30,7 @@ public class OnPlayerMoveListener implements Listener {
 
         for (ProtectedRegion region : previousRegions) {
             if (regions == null) return;
-            if (regions.containsKey(region.getId()) && !this.containsRegion(currentRegions, region) || !player.isOp()) {
+            if (regions.containsKey(region.getId()) && !this.containsRegion(currentRegions, region) && !player.isOp()) {
                 StateFlag.State exit = region.getFlag(Flags.EXIT);
                 if (exit != null && exit.equals(StateFlag.State.DENY)) {
                     player.teleport(player.getWorld().getSpawnLocation());
