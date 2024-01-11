@@ -9,6 +9,7 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.rgantileave.flags.Flags;
 import org.rgantileave.listener.OnPlayerMoveListener;
 
 import java.util.Map;
@@ -18,8 +19,8 @@ import java.util.logging.Logger;
 public final class Rgantileave extends JavaPlugin {
 
     public static Logger logger = Logger.getLogger(Rgantileave.class.getName());
-    public static final StateFlag SPECIAL_ENTER_FLAG;
 
+    //TODO Implement this flag further
     static {
         FlagRegistry flagRegistry = WorldGuard.getInstance().getFlagRegistry();
         StateFlag flag = null;
@@ -27,15 +28,18 @@ public final class Rgantileave extends JavaPlugin {
         try {
             flag = new StateFlag("special-enter", false);
             flagRegistry.register(flag);
+            logger.log(Level.INFO, "Registered flag: " + flag.getName());
         } catch (FlagConflictException e) {
             Flag<?> existing = flagRegistry.get("special-enter");
             if (existing instanceof StateFlag) {
                 flag = (StateFlag) existing;
+                logger.log(Level.INFO, "Flag 'special-enter' already exists. Reusing existing flag.");
             } else {
-                throw e;
+                logger.log(Level.SEVERE, "Failed to register flag 'special-enter'.", e);
+                throw new RuntimeException("Failed to register flag 'special-enter'.", e);
             }
         }
-        SPECIAL_ENTER_FLAG = flag;
+        Flags.SPECIAL_ENTER_FLAG = flag;
     }
 
     @Override

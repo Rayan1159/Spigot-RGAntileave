@@ -1,2 +1,3 @@
-org\rgantileave\Rgantileave.class
 org\rgantileave\listener\OnPlayerMoveListener.class
+org\rgantileave\Rgantileave.class
+org\rgantileave\flags\Flags.class
