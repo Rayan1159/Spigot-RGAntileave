@@ -1,0 +1,5 @@
+name: RGAntileave
+version: '${project.version}'
+main: org.rgantileave.Rgantileave
+api-version: '1.20'
+depend: [WorldGuard]
