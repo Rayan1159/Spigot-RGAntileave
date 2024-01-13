@@ -23,23 +23,30 @@ public final class Rgantileave extends JavaPlugin {
     //TODO Implement this flag further
     static {
         FlagRegistry flagRegistry = WorldGuard.getInstance().getFlagRegistry();
-        StateFlag flag = null;
+        StateFlag flag1 = null;
+        StateFlag flag2 = null;
 
         try {
-            flag = new StateFlag("special-enter", false);
-            flagRegistry.register(flag);
-            logger.log(Level.INFO, "Registered flag: " + flag.getName());
+            flag1 = new StateFlag("special-enter", false);
+            flag2 = new StateFlag("special-fly-zone", false);
+            flagRegistry.register(flag1);
+            flagRegistry.register(flag2);
+            logger.log(Level.INFO, "Registered flag: " + flag1.getName());
+            logger.log(Level.INFO, "Registered flag: " + flag2.getName());
         } catch (FlagConflictException e) {
             Flag<?> existing = flagRegistry.get("special-enter");
-            if (existing instanceof StateFlag) {
-                flag = (StateFlag) existing;
+            Flag<?> existing2 = flagRegistry.get("special-fly-zone");
+            if (existing instanceof StateFlag && existing2 instanceof StateFlag) {
+                flag1 = (StateFlag) existing;
+                flag2 = (StateFlag) existing2;
                 logger.log(Level.INFO, "Flag 'special-enter' already exists. Reusing existing flag.");
             } else {
                 logger.log(Level.SEVERE, "Failed to register flag 'special-enter'.", e);
                 throw new RuntimeException("Failed to register flag 'special-enter'.", e);
             }
         }
-        Flags.SPECIAL_ENTER_FLAG = flag;
+        Flags.SPECIAL_ENTER_FLAG = flag1;
+        Flags.ALLOW_FLY_ZONE = flag2;
     }
 
     @Override
